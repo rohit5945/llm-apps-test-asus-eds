@@ -17,21 +17,22 @@ body {
 main .get-product-details {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   padding: 8px;
-  max-width: 620px;
+  max-width: 680px;
 }
 
 main .get-product-details .detail-card {
   display: flex;
   flex-direction: row;
-  height: 280px;
+  min-height: 320px;
   border-radius: 12px;
   overflow: hidden;
   box-sizing: border-box;
+  border-top: 3px solid var(--brand-accent, #006ce1);
 }
 
 main .get-product-details .detail-image {
-  flex: 0 0 260px;
-  height: 100%;
+  flex: 0 0 240px;
+  height: auto;
 }
 
 main .get-product-details .detail-image img {
@@ -50,16 +51,26 @@ main .get-product-details .detail-content {
   box-sizing: border-box;
 }
 
+main .get-product-details .detail-chip-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
 main .get-product-details .detail-chip {
   align-self: flex-start;
-  background: rgba(255, 255, 255, 0.16);
-  color: inherit;
+  color: #fff;
   font-size: 11px;
   font-weight: 600;
   padding: 3px 10px;
   border-radius: 999px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
+}
+
+main .get-product-details .detail-chip-oos {
+  background: rgba(255, 255, 255, 0.18);
+  color: inherit;
 }
 
 main .get-product-details .detail-title {
@@ -70,6 +81,24 @@ main .get-product-details .detail-title {
   color: inherit;
 }
 
+main .get-product-details .detail-price-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+main .get-product-details .detail-price {
+  font-size: 18px;
+  font-weight: 700;
+  color: inherit;
+}
+
+main .get-product-details .detail-rating {
+  font-size: 12px;
+  opacity: 0.85;
+  color: inherit;
+}
+
 main .get-product-details .detail-desc {
   margin: 0;
   font-size: 13px;
@@ -77,22 +106,61 @@ main .get-product-details .detail-desc {
   opacity: 0.78;
   color: inherit;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-main .get-product-details .detail-cta {
+main .get-product-details .detail-spec-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 16px;
+  font-size: 12px;
+  padding: 8px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+main .get-product-details .detail-spec-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  color: inherit;
+}
+
+main .get-product-details .detail-spec-label {
+  opacity: 0.65;
+}
+
+main .get-product-details .detail-spec-value {
+  font-weight: 600;
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+main .get-product-details .detail-cta-row {
   margin-top: auto;
-  width: 100%;
+  display: flex;
+  gap: 8px;
+}
+
+main .get-product-details .detail-cta {
+  flex: 1;
   padding: 10px 0;
   border: none;
   border-radius: 6px;
-  background: #555555;
+  color: #fff;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   transition: opacity 0.15s;
+}
+
+main .get-product-details .detail-cta-secondary {
+  background: rgba(255, 255, 255, 0.14);
+  color: inherit;
 }
 
 main .get-product-details .detail-cta:hover {

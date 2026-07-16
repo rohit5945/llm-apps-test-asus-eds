@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Required for correct iframe sizing — AEM section margins inflate shadow body */
+main > div,
+main > .section,
+main > .section:first-of-type {
+  margin: 0;
+}
+main > .section > div {
+  max-width: none;
+  padding: 0;
+}
+body {
+  overflow: auto;
+}
+
+main .compare-products {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  padding: 8px;
+  max-width: 900px;
+  overflow-x: auto;
+}
+
+main .compare-products .compare-products-empty {
+  font-size: 13px;
+  opacity: 0.75;
+  padding: 20px;
+  text-align: center;
+}
+
+main .compare-products .compare-products-table {
+  display: grid;
+  grid-template-columns: 100px repeat(var(--compare-cols, 2), minmax(160px, 1fr));
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+  min-width: 500px;
+}
+
+main .compare-products .compare-products-row {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+}
+
+main .compare-products .compare-products-header-row {
+  background: transparent;
+}
+
+main .compare-products .compare-products-cell {
+  padding: 8px 10px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(120, 120, 120, 0.18);
+  color: inherit;
+}
+
+main .compare-products .compare-products-label-cell {
+  font-weight: 600;
+  opacity: 0.65;
+  background: rgba(120, 120, 120, 0.06);
+}
+
+main .compare-products .compare-products-header-cell {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  padding: 10px;
+  border-top: 3px solid var(--brand-accent, #006ce1);
+  background: rgba(120, 120, 120, 0.04);
+}
+
+main .compare-products .compare-products-media {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #f0f0f0;
+}
+
+main .compare-products .compare-products-name {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: inherit;
+}
+
+main .compare-products .compare-products-cta {
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 0;
+  cursor: pointer;
+}
+
+main .compare-products .compare-products-cta:hover {
+  opacity: 0.88;
+}
+
+main .compare-products .compare-products-winner {
+  font-weight: 700;
+  position: relative;
+}
+
+main .compare-products .compare-products-winner::after {
+  content: '✓ best';
+  margin-left: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #2dca72;
+}
+
+@media (prefers-color-scheme: dark) {
+  main .compare-products { background: #111; color: #fff; }
+  main .compare-products .compare-products-cell { border-bottom-color: rgba(255, 255, 255, 0.12); }
+  main .compare-products .compare-products-label-cell,
+  main .compare-products .compare-products-header-cell { background: rgba(255, 255, 255, 0.06); }
+}
+body.dark main .compare-products { background: #111; color: #fff; }
