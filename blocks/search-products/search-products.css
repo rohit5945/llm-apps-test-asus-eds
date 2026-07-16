@@ -17,7 +17,7 @@ body {
 main .search-products {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   padding: 8px;
-  max-width: 780px;
+  max-width: 880px;
 }
 
 main .search-products .search-products-wrapper {
@@ -40,8 +40,8 @@ main .search-products .search-products-track::-webkit-scrollbar {
 }
 
 main .search-products .search-products-card {
-  flex: 0 0 220px;
-  height: 300px;
+  flex: 0 0 240px;
+  height: 340px;
   border-radius: 10px;
   overflow: hidden;
   display: flex;
@@ -49,18 +49,32 @@ main .search-products .search-products-card {
   scroll-snap-align: start;
   box-sizing: border-box;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+  border-top: 3px solid var(--brand-accent, #006ce1);
 }
 
 main .search-products .search-products-image {
-  flex: 6;
+  position: relative;
+  flex: 5;
   width: 100%;
   aspect-ratio: 16 / 9;
   overflow: hidden;
   background: #f0f0f0;
 }
 
+main .search-products .search-products-oos {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: rgba(0, 0, 0, 0.72);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
 main .search-products .search-products-info {
-  flex: 4;
+  flex: 6;
   padding: 10px 14px;
   display: flex;
   flex-direction: column;
@@ -79,21 +93,30 @@ main .search-products .search-products-name {
   color: inherit;
 }
 
-main .search-products .search-products-desc {
+main .search-products .search-products-spec {
   margin: 0;
   font-size: 11px;
-  line-height: 1.35;
-  opacity: 0.78;
+  line-height: 1.3;
+  opacity: 0.85;
   color: inherit;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+main .search-products .search-products-rating {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: inherit;
+  opacity: 0.9;
 }
 
 main .search-products .search-products-badge-row {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 }
 
 main .search-products .search-products-badge {
@@ -103,14 +126,29 @@ main .search-products .search-products-badge {
   padding: 2px 8px;
   border-radius: 10px;
   line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+main .search-products .search-products-price {
+  font-size: 13px;
+  font-weight: 700;
+  color: inherit;
+  white-space: nowrap;
+}
+
+main .search-products .search-products-cta-row {
+  margin-top: auto;
+  display: flex;
+  gap: 6px;
+  padding-top: 8px;
 }
 
 main .search-products .search-products-cta {
-  margin-top: auto;
+  flex: 1;
   padding: 8px 0;
-  width: 100%;
   border: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 6px;
   color: #fff;
   font-family: inherit;
@@ -118,6 +156,11 @@ main .search-products .search-products-cta {
   font-weight: 600;
   cursor: pointer;
   transition: opacity 0.15s;
+}
+
+main .search-products .search-products-cta-secondary {
+  background: rgba(255, 255, 255, 0.14);
+  color: inherit;
 }
 
 main .search-products .search-products-cta:hover {
@@ -132,7 +175,7 @@ main .search-products .search-products-nav:focus-visible {
 
 main .search-products .search-products-nav {
   position: absolute;
-  top: 50%;
+  top: 42%;
   transform: translateY(-50%);
   width: 32px;
   height: 32px;
@@ -158,6 +201,17 @@ main .search-products .search-products-nav-right {
 
 main .search-products .search-products-nav:hover {
   background: rgba(0, 0, 0, 0.75);
+}
+
+main .search-products .search-products-fade {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 50px;
+  pointer-events: none;
+  border-radius: 0 10px 10px 0;
+  background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.15));
 }
 
 @media (prefers-color-scheme: dark) {
