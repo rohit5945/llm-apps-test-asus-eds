@@ -55,12 +55,34 @@ function renderCart(block, cart, bridge) {
     return;
   }
 
+  const shippingThreshold = cart?.free_shipping_threshold_usd;
+  if (typeof shippingThreshold === 'number') {
+    const shipping = document.createElement('div');
+    shipping.className = 'asus-cart-shipping asus-fade-in-up';
+    const label = document.createElement('span');
+    label.className = 'asus-cart-shipping-label';
+    label.textContent = cart.qualifies_free_shipping
+      ? '🎉 You unlocked free shipping!'
+      : `Add ${formatPrice(cart.free_shipping_remaining_usd)} more for free shipping`;
+    const track = document.createElement('div');
+    track.className = 'asus-cart-shipping-track';
+    const fill = document.createElement('div');
+    fill.className = 'asus-cart-shipping-fill';
+    const pct = Math.min(100, Math.round(((cart.subtotal_usd || 0) / shippingThreshold) * 100));
+    fill.style.width = `${pct}%`;
+    track.appendChild(fill);
+    shipping.appendChild(label);
+    shipping.appendChild(track);
+    wrapper.appendChild(shipping);
+  }
+
   const list = document.createElement('div');
   list.className = 'asus-cart-list';
 
-  items.forEach((item) => {
+  items.forEach((item, i) => {
     const row = document.createElement('div');
-    row.className = 'asus-cart-row';
+    row.className = 'asus-cart-row asus-fade-in-up';
+    row.style.animationDelay = `${i * 50}ms`;
 
     const thumb = document.createElement('div');
     thumb.className = 'asus-cart-thumb';
@@ -143,7 +165,7 @@ function renderCart(block, cart, bridge) {
 
   const checkoutBtn = document.createElement('button');
   checkoutBtn.type = 'button';
-  checkoutBtn.className = 'asus-cart-checkout';
+  checkoutBtn.className = 'asus-cart-checkout asus-press';
   checkoutBtn.textContent = 'Checkout';
   if (bridge) {
     checkoutBtn.addEventListener('click', () => bridge.sendMessage(cartInstruction(sessionId, 'check out')));

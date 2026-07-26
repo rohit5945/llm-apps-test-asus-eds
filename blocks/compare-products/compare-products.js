@@ -70,6 +70,7 @@ function renderCompare(block, payload, bridge) {
   const table = document.createElement('div');
   table.className = 'compare-products-table';
   table.style.setProperty('--compare-cols', products.length);
+  table.classList.add('asus-fade-in-up');
 
   // Header row: spec label column + one header cell per product.
   const headerRow = document.createElement('div');
@@ -104,7 +105,7 @@ function renderCompare(block, payload, bridge) {
 
     const cartBtn = document.createElement('button');
     cartBtn.type = 'button';
-    cartBtn.className = 'compare-products-cta';
+    cartBtn.className = 'compare-products-cta asus-press';
     cartBtn.style.background = theme.accent;
     cartBtn.textContent = 'Add to Cart';
     if (bridge) {

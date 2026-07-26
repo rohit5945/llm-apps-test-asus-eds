@@ -43,8 +43,9 @@ function renderItems(block, items, bridge) {
   items.forEach((item, i) => {
     const theme = getBrandTheme(item.brand_line);
     const card = document.createElement('div');
-    card.className = 'browse-products-by-series-card';
+    card.className = 'browse-products-by-series-card asus-fade-in-up asus-hover-lift';
     card.style.setProperty('--brand-accent', theme.accent);
+    card.style.animationDelay = `${i * 60}ms`;
 
     const media = document.createElement('div');
     media.className = 'browse-products-by-series-media';
@@ -101,7 +102,7 @@ function renderItems(block, items, bridge) {
     }
 
     const btn = document.createElement('button');
-    btn.className = 'browse-products-by-series-cta';
+    btn.className = 'browse-products-by-series-cta asus-press';
     btn.type = 'button';
     btn.textContent = 'View Details';
     if (bridge) {

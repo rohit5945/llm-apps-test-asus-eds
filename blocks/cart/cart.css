@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('../../scripts/asus-motion.css');
 
 /* Required for correct iframe sizing — AEM section margins inflate shadow body */
 main > div,
@@ -145,6 +146,34 @@ main .cart .asus-cart-checkout {
 
 main .cart .asus-cart-checkout:hover {
   opacity: 0.88;
+}
+
+main .cart .asus-cart-shipping {
+  margin-bottom: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+main .cart .asus-cart-shipping-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: inherit;
+  opacity: 0.85;
+}
+
+main .cart .asus-cart-shipping-track {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(120, 120, 120, 0.18);
+  overflow: hidden;
+}
+
+main .cart .asus-cart-shipping-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #2dca72, #006ce1);
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @media (prefers-color-scheme: dark) {

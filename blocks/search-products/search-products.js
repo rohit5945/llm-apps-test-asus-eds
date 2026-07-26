@@ -45,8 +45,9 @@ function renderItems(block, items, bridge) {
   list.forEach((item, i) => {
     const theme = getBrandTheme(item.brand_line);
     const card = document.createElement('div');
-    card.className = 'search-products-card';
+    card.className = 'search-products-card asus-fade-in-up asus-hover-lift';
     card.style.setProperty('--brand-accent', theme.accent);
+    card.style.animationDelay = `${i * 60}ms`;
 
     const imageContainer = document.createElement('div');
     imageContainer.className = 'search-products-image';
@@ -131,7 +132,7 @@ function renderItems(block, items, bridge) {
     ctaRow.appendChild(detailsBtn);
 
     const cartBtn = document.createElement('button');
-    cartBtn.className = 'search-products-cta search-products-cta-primary';
+    cartBtn.className = 'search-products-cta search-products-cta-primary asus-press';
     cartBtn.type = 'button';
     cartBtn.style.background = theme.accent;
     cartBtn.textContent = item.in_stock === false ? 'Notify me' : 'Add to Cart';

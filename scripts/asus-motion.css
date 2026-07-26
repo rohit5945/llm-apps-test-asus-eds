@@ -1,0 +1,81 @@
+/**
+ * Shared motion/animation primitives for all ASUS widgets.
+ * `@import`ed from each block's own CSS so a single file controls the
+ * "feel" of every widget consistently. Respects prefers-reduced-motion.
+ */
+
+@keyframes asus-fade-in-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes asus-pop-in {
+  0% { opacity: 0; transform: scale(0.82); }
+  60% { opacity: 1; transform: scale(1.04); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes asus-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes asus-checkmark-stroke {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes asus-checkmark-scale {
+  0%, 100% { transform: none; }
+  50% { transform: scale3d(1.08, 1.08, 1); }
+}
+
+.asus-fade-in-up {
+  animation: asus-fade-in-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.asus-pop-in {
+  animation: asus-pop-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.asus-hover-lift {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease;
+}
+
+.asus-hover-lift:hover,
+.asus-hover-lift:focus-within {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.16);
+}
+
+.asus-press {
+  transition: transform 0.1s ease;
+}
+
+.asus-press:active {
+  transform: scale(0.96);
+}
+
+.asus-skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(120, 120, 120, 0.14) 25%,
+    rgba(120, 120, 120, 0.24) 37%,
+    rgba(120, 120, 120, 0.14) 63%
+  );
+  background-size: 400% 100%;
+  animation: asus-shimmer 1.4s ease infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .asus-fade-in-up,
+  .asus-pop-in,
+  .asus-hover-lift,
+  .asus-hover-lift:hover,
+  .asus-hover-lift:focus-within,
+  .asus-press,
+  .asus-skeleton {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}

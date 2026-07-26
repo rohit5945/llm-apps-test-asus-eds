@@ -1,7 +1,7 @@
 /**
  * Shared sample data for standalone/preview mode across widget blocks.
  * In production, real data comes from bridge.toolResult (see the
- * corresponding action in the llm-apps-test-asus repo's lib/catalog.js
+ * corresponding action in the llm-apps-test-asus repo's actions/lib/catalog.js
  * — field names here must stay in sync with that module's `toCard()` shape).
  */
 
@@ -132,4 +132,45 @@ export const SAMPLE_CART = {
   ],
   item_count: 2,
   subtotal_usd: 2998,
+  free_shipping_threshold_usd: 1500,
+  free_shipping_remaining_usd: 0,
+  qualifies_free_shipping: true,
+};
+
+/** Sample recommendations payload for the recommendations widget's preview mode. */
+export const SAMPLE_RECOMMENDATIONS = {
+  based_on: 'product',
+  recommendations: [
+    { ...SAMPLE_PRODUCTS[2], reason: 'Also popular in the TUF Gaming line' },
+    {
+      id: 'rog-gladius-iii-mouse',
+      name: 'ROG Gladius III Wireless Mouse',
+      description: 'Lightweight wireless gaming mouse with swappable switches and Aura Sync RGB.',
+      image_url: null,
+      category: 'Gaming Mouse',
+      brand_line: 'rog',
+      price_usd: 99,
+      rating: 4.7,
+      review_count: 340,
+      in_stock: true,
+      is_accessory: true,
+      fallback_color: '#FF0000',
+      reason: 'Frequently bought with TUF Gaming A15',
+    },
+    {
+      id: 'asus-portable-ssd-1tb',
+      name: 'ASUS 1TB Portable SSD',
+      description: 'Pocket-sized 1TB USB-C SSD with up to 1050MB/s transfer speeds.',
+      image_url: null,
+      category: 'Storage',
+      brand_line: 'vivobook',
+      price_usd: 89,
+      rating: 4.6,
+      review_count: 275,
+      in_stock: true,
+      is_accessory: true,
+      fallback_color: '#7B2FF7',
+      reason: 'Frequently bought with TUF Gaming A15',
+    },
+  ],
 };

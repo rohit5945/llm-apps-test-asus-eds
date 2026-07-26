@@ -51,7 +51,7 @@ function renderDetail(block, item, bridge) {
   const theme = getBrandTheme(item.brand_line);
 
   const card = document.createElement('div');
-  card.className = 'detail-card';
+  card.className = 'detail-card asus-pop-in';
   card.style.setProperty('--brand-accent', theme.accent);
 
   const imageContainer = document.createElement('div');
@@ -140,7 +140,7 @@ function renderDetail(block, item, bridge) {
   ctaRow.className = 'detail-cta-row';
 
   const cartBtn = document.createElement('button');
-  cartBtn.className = 'detail-cta detail-cta-primary';
+  cartBtn.className = 'detail-cta detail-cta-primary asus-press';
   cartBtn.type = 'button';
   cartBtn.style.background = theme.accent;
   cartBtn.textContent = item.in_stock === false ? 'Notify me' : 'Add to Cart';
