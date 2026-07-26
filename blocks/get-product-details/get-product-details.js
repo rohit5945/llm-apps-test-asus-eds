@@ -1,5 +1,5 @@
 import { SAMPLE_PRODUCTS } from '../../scripts/asus-sample-data.js';
-import { getBrandTheme, formatPrice, ratingStars, gpuTierLabel } from '../../scripts/asus-brand.js';
+import { getBrandTheme, formatPrice, ratingStars, gpuTierLabel, renderBrandStrip } from '../../scripts/asus-brand.js';
 
 export default async function decorate(block, bridge) {
   let item;
@@ -77,6 +77,8 @@ function renderDetail(block, item, bridge) {
   const content = document.createElement('div');
   content.className = 'detail-content';
   content.style.cssText = `background:${theme.bg ?? '#1a1a1a'};color:${theme.fg ?? '#fff'};`;
+
+  content.appendChild(renderBrandStrip(item.brand_line, item.series));
 
   const chipRow = document.createElement('div');
   chipRow.className = 'detail-chip-row';
@@ -159,6 +161,16 @@ function renderDetail(block, item, bridge) {
   ctaRow.appendChild(compareBtn);
 
   content.appendChild(ctaRow);
+
+  if (item.buy_url) {
+    const realLink = document.createElement('a');
+    realLink.className = 'detail-real-link';
+    realLink.href = item.buy_url;
+    realLink.target = '_blank';
+    realLink.rel = 'noopener noreferrer';
+    realLink.textContent = 'View full specs on ASUS.com ↗';
+    content.appendChild(realLink);
+  }
 
   card.appendChild(content);
   block.appendChild(card);

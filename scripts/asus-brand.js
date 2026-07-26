@@ -1,22 +1,52 @@
 /**
  * Shared ASUS sub-brand theming + formatting helpers for widget blocks
  * (search-products, get-product-details, browse-products-by-series,
- * compare-products, cart).
+ * compare-products, cart, recommendations, checkout-confirmation).
  *
- * NOTE ON COLORS: these are a public-branding approximation (ROG black+red,
- * TUF gunmetal+orange, Zenbook navy, Vivobook color-pop, ProArt black+amber)
- * — not pulled from an official Adobe/ASUS brand guideline file. Swap the
- * hex values below once the real brand kit is available; every widget reads
- * colors from this one module, so updating brand colors never requires
- * touching individual blocks.
+ * Colors/labels below were tuned to visually match each sub-brand's real
+ * asus.com presence (ROG's black+red, TUF's gunmetal+yellow, Zenbook's
+ * "quiet luxury" slate, ProArt's creator gold, Vivobook's everyday color-pop)
+ * as of the July 2026 refresh. Still an approximation, not an official
+ * Adobe/ASUS brand-kit file; every widget reads colors from this one module,
+ * so updating brand colors never requires touching individual blocks.
  */
 
 export const BRAND_THEMES = {
-  zenbook: { accent: '#0B3D91', name: 'Zenbook' },
-  rog: { accent: '#FF0000', name: 'ROG' },
-  tuf: { accent: '#FFA400', name: 'TUF Gaming' },
-  vivobook: { accent: '#7B2FF7', name: 'Vivobook' },
-  proart: { accent: '#FF6B00', name: 'ProArt' },
+  zenbook: {
+    accent: '#1F3A5C',
+    name: 'Zenbook',
+    label: 'ASUS ZENBOOK',
+    tagline: 'Quiet luxury, all-day power.',
+    headingFont: "'Inter', sans-serif",
+  },
+  rog: {
+    accent: '#E2231A',
+    name: 'ROG',
+    label: 'ASUS ROG',
+    tagline: 'Republic of Gamers.',
+    headingFont: "'Rajdhani', 'Inter', sans-serif",
+  },
+  tuf: {
+    accent: '#F2A900',
+    name: 'TUF Gaming',
+    label: 'ASUS TUF GAMING',
+    tagline: 'Built tough. Priced right.',
+    headingFont: "'Rajdhani', 'Inter', sans-serif",
+  },
+  vivobook: {
+    accent: '#7B2FF7',
+    name: 'Vivobook',
+    label: 'ASUS VIVOBOOK',
+    tagline: 'Everyday, elevated.',
+    headingFont: "'Inter', sans-serif",
+  },
+  proart: {
+    accent: '#C9A227',
+    name: 'ProArt',
+    label: 'ASUS PROART',
+    tagline: 'Built for creators.',
+    headingFont: "'Inter', sans-serif",
+  },
 };
 
 const DEFAULT_ACCENT = '#006ce1';
@@ -56,12 +86,12 @@ export function getThemedCardBg(hex) {
 }
 
 /**
- * Resolves the full theme (accent + card bg/fg + display name) for a
- * product's brand_line, falling back to a neutral ASUS blue if unknown.
+ * Resolves the full theme (accent + card bg/fg + display name/label/font) for
+ * a product's brand_line, falling back to a neutral ASUS blue if unknown.
  * @param {string} brandLine e.g. 'rog', 'zenbook'
  */
 export function getBrandTheme(brandLine) {
-  const theme = BRAND_THEMES[brandLine] || { accent: DEFAULT_ACCENT, name: 'ASUS' };
+  const theme = BRAND_THEMES[brandLine] || { accent: DEFAULT_ACCENT, name: 'ASUS', label: 'ASUS', tagline: '', headingFont: "'Inter', sans-serif" };
   return { ...theme, ...getThemedCardBg(theme.accent) };
 }
 
@@ -77,7 +107,7 @@ export function ratingStars(rating) {
 }
 
 const GPU_TIER_LABELS = {
-  integrated: 'Integrated',
+  integrated: 'Integrated Graphics',
   entry: 'Entry Gaming',
   mid: 'Mid Gaming',
   high: 'High-End Gaming',
@@ -91,10 +121,55 @@ export function gpuTierLabel(tier) {
 /** Short one-line spec summary used on compact cards. */
 export function specLine(item) {
   const parts = [];
-  if (item.gpu) parts.push(item.gpu.replace('NVIDIA ', ''));
+  if (item.gpu) parts.push(item.gpu.replace('NVIDIA ', '').replace('GeForce ', ''));
   if (item.ram_gb) parts.push(`${item.ram_gb}GB RAM`);
   if (item.screen_size_in) parts.push(`${item.screen_size_in}"`);
   return parts.join(' · ');
 }
 
 export const CARD_FALLBACK_COLORS = ['#378ef0', '#9256d9', '#0fb5ae', '#e68619', '#d83790', '#2dca72', '#4046ca', '#72b340'];
+
+/**
+ * Small "breadcrumb" lockup — ASUS › <Sub-brand> › <Series> — dropped at the
+ * top of every widget so a single card/table/detail view reads as part of
+ * one coherent ASUS storefront rather than a standalone, disconnected demo
+ * widget. Purely presentational; returns a detached DOM node to append.
+ * @param {string} brandLine
+ * @param {string} [series] optional third breadcrumb segment, e.g. "ROG Strix"
+ */
+export function renderBrandStrip(brandLine, series) {
+  const theme = getBrandTheme(brandLine);
+  const strip = document.createElement('div');
+  strip.className = 'asus-brand-strip';
+  strip.style.setProperty('--brand-accent', theme.accent);
+
+  const mark = document.createElement('span');
+  mark.className = 'asus-brand-strip-mark';
+  mark.textContent = 'ASUS';
+  strip.appendChild(mark);
+
+  const sep1 = document.createElement('span');
+  sep1.className = 'asus-brand-strip-sep';
+  sep1.textContent = '›';
+  strip.appendChild(sep1);
+
+  const sub = document.createElement('span');
+  sub.className = 'asus-brand-strip-sub';
+  sub.style.color = theme.accent;
+  sub.textContent = theme.name;
+  strip.appendChild(sub);
+
+  if (series && series !== theme.name) {
+    const sep2 = document.createElement('span');
+    sep2.className = 'asus-brand-strip-sep';
+    sep2.textContent = '›';
+    strip.appendChild(sep2);
+
+    const seriesEl = document.createElement('span');
+    seriesEl.className = 'asus-brand-strip-series';
+    seriesEl.textContent = series;
+    strip.appendChild(seriesEl);
+  }
+
+  return strip;
+}

@@ -39,6 +39,20 @@ function renderItems(block, items, bridge) {
   const wrapper = document.createElement('div');
   wrapper.className = 'search-products-wrapper';
 
+  const heading = document.createElement('h3');
+  heading.className = 'search-products-heading asus-fade-in-up';
+  heading.textContent = list.length
+    ? `${list.length} ASUS laptop${list.length === 1 ? '' : 's'} for you`
+    : 'No ASUS laptops matched — try a different budget or use case';
+  wrapper.appendChild(heading);
+
+  if (list.length) {
+    const guidance = document.createElement('p');
+    guidance.className = 'search-products-guidance asus-fade-in-up';
+    guidance.textContent = 'Tap Details to learn more, Compare to see them side by side, or Add to Cart when you\'re ready to buy.';
+    wrapper.appendChild(guidance);
+  }
+
   const track = document.createElement('div');
   track.className = 'search-products-track';
 
@@ -81,6 +95,13 @@ function renderItems(block, items, bridge) {
     const info = document.createElement('div');
     info.className = 'search-products-info';
     info.style.cssText = `background:${theme.bg ?? '#1a1a1a'};color:${theme.fg ?? '#fff'};`;
+
+    const brandLabel = document.createElement('span');
+    brandLabel.className = 'search-products-brand-label';
+    brandLabel.style.color = theme.accent;
+    brandLabel.style.fontFamily = theme.headingFont;
+    brandLabel.textContent = theme.label;
+    info.appendChild(brandLabel);
 
     if (item.category) {
       const badgeRow = document.createElement('div');
@@ -142,6 +163,17 @@ function renderItems(block, items, bridge) {
     ctaRow.appendChild(cartBtn);
 
     info.appendChild(ctaRow);
+
+    if (item.buy_url) {
+      const realLink = document.createElement('a');
+      realLink.className = 'search-products-real-link';
+      realLink.href = item.buy_url;
+      realLink.target = '_blank';
+      realLink.rel = 'noopener noreferrer';
+      realLink.textContent = 'View on ASUS.com ↗';
+      info.appendChild(realLink);
+    }
+
     card.appendChild(info);
     track.appendChild(card);
   });

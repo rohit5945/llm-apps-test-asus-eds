@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 @import url('../../scripts/asus-motion.css');
+@import url('../../scripts/asus-brand.css');
 
 /* Required for correct iframe sizing — AEM section margins inflate shadow body */
 main > div,
@@ -166,6 +167,20 @@ main .get-product-details .detail-cta-secondary {
 
 main .get-product-details .detail-cta:hover {
   opacity: 0.88;
+}
+
+main .get-product-details .detail-real-link {
+  align-self: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: inherit;
+  opacity: 0.7;
+  text-decoration: none;
+}
+
+main .get-product-details .detail-real-link:hover {
+  opacity: 1;
+  text-decoration: underline;
 }
 
 @media (max-width: 460px) {

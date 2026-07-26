@@ -37,6 +37,11 @@ function renderItems(block, items, bridge) {
   const wrapper = document.createElement('div');
   wrapper.className = 'browse-products-by-series-wrapper';
 
+  const heading = document.createElement('h3');
+  heading.className = 'browse-products-by-series-heading asus-fade-in-up';
+  heading.textContent = `${items.length} model${items.length === 1 ? '' : 's'} in this lineup`;
+  wrapper.appendChild(heading);
+
   const track = document.createElement('div');
   track.className = 'browse-products-by-series-track';
 
@@ -70,6 +75,13 @@ function renderItems(block, items, bridge) {
     const info = document.createElement('div');
     info.className = 'browse-products-by-series-info';
     info.style.cssText = `background:${theme.bg ?? '#1a1a1a'};color:${theme.fg ?? '#fff'};`;
+
+    const brandLabel = document.createElement('span');
+    brandLabel.className = 'browse-products-by-series-brand-label';
+    brandLabel.style.color = theme.accent;
+    brandLabel.style.fontFamily = theme.headingFont;
+    brandLabel.textContent = theme.label;
+    info.appendChild(brandLabel);
 
     const badgeRow = document.createElement('div');
     badgeRow.className = 'browse-products-by-series-badge-row';
@@ -109,6 +121,16 @@ function renderItems(block, items, bridge) {
       btn.addEventListener('click', () => bridge.sendMessage(`Tell me more about ${item.name}`));
     }
     info.appendChild(btn);
+
+    if (item.buy_url) {
+      const realLink = document.createElement('a');
+      realLink.className = 'browse-products-by-series-real-link';
+      realLink.href = item.buy_url;
+      realLink.target = '_blank';
+      realLink.rel = 'noopener noreferrer';
+      realLink.textContent = 'View on ASUS.com ↗';
+      info.appendChild(realLink);
+    }
 
     card.appendChild(info);
     track.appendChild(card);

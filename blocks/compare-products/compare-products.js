@@ -67,6 +67,11 @@ function renderCompare(block, payload, bridge) {
     return;
   }
 
+  const heading = document.createElement('h3');
+  heading.className = 'compare-products-heading asus-fade-in-up';
+  heading.textContent = `Comparing ${products.length} ASUS laptops`;
+  block.appendChild(heading);
+
   const table = document.createElement('div');
   table.className = 'compare-products-table';
   table.style.setProperty('--compare-cols', products.length);
@@ -98,6 +103,13 @@ function renderCompare(block, payload, bridge) {
     }
     cell.appendChild(media);
 
+    const brandLabel = document.createElement('span');
+    brandLabel.className = 'compare-products-brand-label';
+    brandLabel.style.color = theme.accent;
+    brandLabel.style.fontFamily = theme.headingFont;
+    brandLabel.textContent = theme.label;
+    cell.appendChild(brandLabel);
+
     const name = document.createElement('h4');
     name.className = 'compare-products-name';
     name.textContent = item.name || '';
@@ -112,6 +124,16 @@ function renderCompare(block, payload, bridge) {
       cartBtn.addEventListener('click', () => bridge.sendMessage(`Add the ${item.name} to my cart`));
     }
     cell.appendChild(cartBtn);
+
+    if (item.buy_url) {
+      const realLink = document.createElement('a');
+      realLink.className = 'compare-products-real-link';
+      realLink.href = item.buy_url;
+      realLink.target = '_blank';
+      realLink.rel = 'noopener noreferrer';
+      realLink.textContent = 'View on ASUS.com ↗';
+      cell.appendChild(realLink);
+    }
 
     headerRow.appendChild(cell);
   });

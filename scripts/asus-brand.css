@@ -1,0 +1,40 @@
+/**
+ * Shared brand chrome — the small "ASUS › Sub-brand › Series" strip that
+ * every widget renders via renderBrandStrip() in scripts/asus-brand.js.
+ * Kept in its own file (rather than duplicated per-block CSS) so the look
+ * stays identical everywhere a user might see it in one session.
+ */
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap');
+
+.asus-brand-strip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 10px 2px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: inherit;
+  opacity: 0.85;
+}
+
+.asus-brand-strip-mark {
+  color: inherit;
+}
+
+.asus-brand-strip-sep {
+  opacity: 0.45;
+  font-weight: 400;
+}
+
+.asus-brand-strip-sub {
+  font-weight: 700;
+}
+
+.asus-brand-strip-series {
+  opacity: 0.75;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+}
