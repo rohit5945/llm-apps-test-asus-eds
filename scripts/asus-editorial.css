@@ -1,0 +1,175 @@
+/**
+ * Shared "editorial storefront" design system for every ASUS widget block —
+ * cream/off-white neutral card panels (never a full brand-color tint),
+ * italic serif product/plan names, small-caps pill badges, a single pill
+ * CTA button style, and hairline dividers. This is the July 2026 redesign
+ * that brings the ASUS widgets up to the same polish level as the
+ * FrescopaApp reference the client benchmarked against.
+ *
+ * Brand accent color (scripts/asus-brand.js) is still used everywhere, but
+ * ONLY for: the 3px card top border, pill-badge text/border, the price
+ * color, and the primary CTA button fill — never as the full panel
+ * background/foreground anymore (that was the single biggest complaint —
+ * panels that looked like "random cards" because every one was a
+ * different fully-tinted brand color).
+ *
+ * Imported by every block's own CSS, alongside asus-motion.css and
+ * asus-brand.css: `@import url('../../scripts/asus-editorial.css');`
+ */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&display=swap');
+
+:root {
+  --asus-editorial-bg: #faf7f2;
+  --asus-editorial-bg-dark: #241f1a;
+  --asus-editorial-ink: #211d18;
+  --asus-editorial-ink-dark: #f3eee7;
+  --asus-editorial-muted: rgba(33, 29, 24, 0.62);
+  --asus-editorial-muted-dark: rgba(243, 238, 231, 0.65);
+  --asus-editorial-hairline: rgba(33, 29, 24, 0.14);
+  --asus-editorial-hairline-dark: rgba(243, 238, 231, 0.18);
+  --asus-editorial-tint: rgba(33, 29, 24, 0.04);
+  --asus-editorial-tint-dark: rgba(243, 238, 231, 0.06);
+  --asus-editorial-serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+}
+
+/* Default neutral panel background — the replacement for the old
+   per-brand-tinted `theme.bg`/`theme.fg` inline styles. */
+.asus-editorial-panel {
+  background: var(--asus-editorial-bg);
+  color: var(--asus-editorial-ink);
+}
+
+@media (prefers-color-scheme: dark) {
+  .asus-editorial-panel { background: var(--asus-editorial-bg-dark); color: var(--asus-editorial-ink-dark); }
+}
+body.dark .asus-editorial-panel { background: var(--asus-editorial-bg-dark); color: var(--asus-editorial-ink-dark); }
+
+/* A softer, tinted variant of the panel — used for callout/info boxes
+   (order summaries, tasting-experience-style sections) that need to read
+   as "inside" the cream panel rather than as its own card. */
+.asus-editorial-tint {
+  background: var(--asus-editorial-tint);
+  border-radius: 10px;
+}
+@media (prefers-color-scheme: dark) { .asus-editorial-tint { background: var(--asus-editorial-tint-dark); } }
+body.dark .asus-editorial-tint { background: var(--asus-editorial-tint-dark); }
+
+/* Italic serif display type for every product/plan name across widgets. */
+.asus-editorial-name {
+  font-family: var(--asus-editorial-serif);
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: inherit;
+}
+
+.asus-editorial-muted {
+  color: var(--asus-editorial-muted);
+}
+@media (prefers-color-scheme: dark) { .asus-editorial-muted { color: var(--asus-editorial-muted-dark); } }
+body.dark .asus-editorial-muted { color: var(--asus-editorial-muted-dark); }
+
+/* Small-caps category / sub-brand pill badge — outlined in the brand
+   accent, transparent/cream fill, never a solid accent-filled chip. */
+.asus-pill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  align-self: flex-start;
+  padding: 4px 12px;
+  border: 1px solid var(--brand-accent, #006ce1);
+  border-radius: 999px;
+  color: var(--brand-accent, #006ce1);
+  background: transparent;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Hairline divider — used to separate sections within a panel (price/desc
+   from the long description, spec grid from the cross-sell footer, etc). */
+.asus-hairline {
+  border: none;
+  border-top: 1px solid var(--asus-editorial-hairline);
+  margin: 14px 0;
+}
+@media (prefers-color-scheme: dark) { .asus-hairline { border-top-color: var(--asus-editorial-hairline-dark); } }
+body.dark .asus-hairline { border-top-color: var(--asus-editorial-hairline-dark); }
+
+/* Single pill-shaped CTA button — the primary action styling everywhere.
+   Modifiers: --outline (secondary, accent-outlined), --quiet (tertiary,
+   neutral hairline border), --small (compact, for dense card rows). */
+.asus-pill-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 26px;
+  background: var(--brand-accent, #006ce1);
+  color: #fff;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.asus-pill-cta:hover { opacity: 0.9; }
+.asus-pill-cta:focus-visible { outline: 2px solid var(--brand-accent, #006ce1); outline-offset: 2px; }
+
+.asus-pill-cta--outline {
+  background: transparent;
+  border: 1.5px solid var(--brand-accent, #006ce1);
+  color: var(--brand-accent, #006ce1);
+}
+
+.asus-pill-cta--quiet {
+  background: transparent;
+  border: 1px solid var(--asus-editorial-hairline);
+  color: inherit;
+}
+@media (prefers-color-scheme: dark) { .asus-pill-cta--quiet { border-color: var(--asus-editorial-hairline-dark); } }
+body.dark .asus-pill-cta--quiet { border-color: var(--asus-editorial-hairline-dark); }
+
+.asus-pill-cta--small {
+  padding: 8px 18px;
+  font-size: 12px;
+}
+
+.asus-pill-cta--block {
+  width: 100%;
+}
+
+.asus-pill-cta:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Quiet footer link — e.g. the real "View on ASUS.com ↗" outbound link. */
+.asus-editorial-footer-link {
+  font-size: 11.5px;
+  font-weight: 600;
+  text-decoration: none;
+  color: inherit;
+  opacity: 0.6;
+  align-self: center;
+}
+.asus-editorial-footer-link:hover { opacity: 1; text-decoration: underline; }
+
+/* Italic cross-sell line, e.g. "Want extra peace of mind?" */
+.asus-editorial-crosssell-line {
+  margin: 0;
+  font-style: italic;
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: inherit;
+  opacity: 0.85;
+}
