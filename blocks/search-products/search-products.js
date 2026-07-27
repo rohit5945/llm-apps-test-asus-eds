@@ -78,7 +78,7 @@ function renderItems(block, items, bridge) {
       img.src = item.image_url;
       img.alt = item.name || '';
       img.loading = 'lazy';
-      img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+      img.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
       img.onerror = () => { if (img.parentNode) img.parentNode.replaceChild(colorDiv(), img); };
       imageContainer.appendChild(img);
     } else {
@@ -93,58 +93,47 @@ function renderItems(block, items, bridge) {
     card.appendChild(imageContainer);
 
     const info = document.createElement('div');
-    info.className = 'search-products-info';
-    info.style.cssText = `background:${theme.bg ?? '#1a1a1a'};color:${theme.fg ?? '#fff'};`;
+    info.className = 'search-products-info asus-editorial-panel';
 
-    const brandLabel = document.createElement('span');
-    brandLabel.className = 'search-products-brand-label';
-    brandLabel.style.color = theme.accent;
-    brandLabel.style.fontFamily = theme.headingFont;
-    brandLabel.textContent = theme.label;
-    info.appendChild(brandLabel);
-
-    if (item.category) {
-      const badgeRow = document.createElement('div');
-      badgeRow.className = 'search-products-badge-row';
-      const badge = document.createElement('span');
-      badge.className = 'search-products-badge';
-      badge.style.background = theme.accent;
-      badge.textContent = item.category;
-      badgeRow.appendChild(badge);
-      if (typeof item.price_usd === 'number') {
-        const price = document.createElement('span');
-        price.className = 'search-products-price';
-        price.textContent = formatPrice(item.price_usd);
-        badgeRow.appendChild(price);
-      }
-      info.appendChild(badgeRow);
-    }
+    const badge = document.createElement('span');
+    badge.className = 'search-products-badge asus-pill-badge';
+    badge.style.setProperty('--brand-accent', theme.accent);
+    badge.textContent = item.category || theme.label;
+    info.appendChild(badge);
 
     const title = document.createElement('h3');
-    title.className = 'search-products-name';
+    title.className = 'search-products-name asus-editorial-name';
     title.textContent = item.name || '';
     info.appendChild(title);
 
     const spec = specLine(item);
     if (spec) {
       const specEl = document.createElement('p');
-      specEl.className = 'search-products-spec';
+      specEl.className = 'search-products-spec asus-editorial-muted';
       specEl.textContent = spec;
       info.appendChild(specEl);
     }
 
     if (typeof item.rating === 'number') {
       const rating = document.createElement('p');
-      rating.className = 'search-products-rating';
+      rating.className = 'search-products-rating asus-editorial-muted';
       rating.textContent = `${ratingStars(item.rating)} ${item.rating.toFixed(1)}`;
       info.appendChild(rating);
+    }
+
+    if (typeof item.price_usd === 'number') {
+      const price = document.createElement('span');
+      price.className = 'search-products-price';
+      price.style.color = theme.accent;
+      price.textContent = formatPrice(item.price_usd);
+      info.appendChild(price);
     }
 
     const ctaRow = document.createElement('div');
     ctaRow.className = 'search-products-cta-row';
 
     const detailsBtn = document.createElement('button');
-    detailsBtn.className = 'search-products-cta search-products-cta-secondary';
+    detailsBtn.className = 'search-products-cta-secondary asus-pill-cta asus-pill-cta--quiet asus-pill-cta--small';
     detailsBtn.type = 'button';
     detailsBtn.textContent = 'Details';
     if (bridge) {
@@ -153,9 +142,9 @@ function renderItems(block, items, bridge) {
     ctaRow.appendChild(detailsBtn);
 
     const cartBtn = document.createElement('button');
-    cartBtn.className = 'search-products-cta search-products-cta-primary asus-press';
+    cartBtn.className = 'search-products-cta-primary asus-pill-cta asus-pill-cta--small asus-press';
     cartBtn.type = 'button';
-    cartBtn.style.background = theme.accent;
+    cartBtn.style.setProperty('--brand-accent', theme.accent);
     cartBtn.textContent = item.in_stock === false ? 'Notify me' : 'Add to Cart';
     if (bridge) {
       cartBtn.addEventListener('click', () => bridge.sendMessage(`Add the ${item.name} to my cart`));
@@ -166,7 +155,7 @@ function renderItems(block, items, bridge) {
 
     if (item.buy_url) {
       const realLink = document.createElement('a');
-      realLink.className = 'search-products-real-link';
+      realLink.className = 'search-products-real-link asus-editorial-footer-link';
       realLink.href = item.buy_url;
       realLink.target = '_blank';
       realLink.rel = 'noopener noreferrer';
@@ -193,7 +182,7 @@ function renderItems(block, items, bridge) {
   rightBtn.setAttribute('aria-label', 'Scroll right');
   rightBtn.textContent = '▶';
 
-  const cardStep = 240 + 16;
+  const cardStep = 280 + 20;
   const scrollByCard = (dir) => track.scrollBy({ left: dir * cardStep, behavior: 'smooth' });
   leftBtn.addEventListener('click', () => scrollByCard(-1));
   rightBtn.addEventListener('click', () => scrollByCard(1));

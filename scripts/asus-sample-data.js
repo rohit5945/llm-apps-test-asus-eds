@@ -6,7 +6,10 @@
  *
  * Refreshed July 2026 to mirror the real ASUS catalog (see lib/catalog.js in
  * the backend repo) so preview mode looks like the real, live experience
- * instead of placeholder data.
+ * instead of placeholder data. Extended again alongside the editorial
+ * redesign to cover the new warranty-options widget and the cart's
+ * warranty upsell / nested warranty line items (see lib/cart.js's
+ * annotateWarrantyUpsell + addWarrantyItem in the backend repo).
  */
 
 export const SAMPLE_PRODUCTS = [
@@ -137,15 +140,29 @@ export const SAMPLE_PRODUCTS = [
   },
 ];
 
-/** Sample cart payload for the cart widget's preview mode. */
+/**
+ * Sample cart payload for the cart widget's preview mode. Mirrors
+ * view-cart's real shape: a `warranty_upsell: true` hint on the
+ * unprotected TUF laptop line, a real `item_type: 'warranty'` sub-line
+ * already attached to the Zenbook DUO (for_product_id), and the
+ * Zenbook DUO's own product line carrying `warranty_upsell: false`
+ * since it's already protected.
+ */
 export const SAMPLE_CART = {
   session_id: 'sess_preview-demo',
   items: [
-    { product_id: 'tuf-gaming-a16-2025', name: 'TUF Gaming A16 (2025)', price_usd: 1399, image_url: 'https://dlcdnwebimgs.asus.com/gain/c0b28d76-4515-4965-9982-18898fdd5208/w800', quantity: 1 },
-    { product_id: 'zenbook-duo-ux8407-2026', name: 'ASUS Zenbook DUO (UX8407)', price_usd: 2299, image_url: 'https://dlcdnwebimgs.asus.com/gain/9fe03e85-4f8e-416e-bdea-2eb8879361aa/', quantity: 1 },
+    {
+      item_type: 'product', product_id: 'tuf-gaming-a16-2025', name: 'TUF Gaming A16 (2025)', price_usd: 1399, image_url: 'https://dlcdnwebimgs.asus.com/gain/c0b28d76-4515-4965-9982-18898fdd5208/w800', quantity: 1, warranty_upsell: true,
+    },
+    {
+      item_type: 'product', product_id: 'zenbook-duo-ux8407-2026', name: 'ASUS Zenbook DUO (UX8407)', price_usd: 2299, image_url: 'https://dlcdnwebimgs.asus.com/gain/9fe03e85-4f8e-416e-bdea-2eb8879361aa/', quantity: 1, warranty_upsell: false,
+    },
+    {
+      item_type: 'warranty', plan_id: 'apc-3yr-adp', name: 'ASUS Premium Care — 3-Year Extension + Accidental Damage Protection (ADP)', price_usd: 209.99, quantity: 1, for_product_id: 'zenbook-duo-ux8407-2026',
+    },
   ],
-  item_count: 2,
-  subtotal_usd: 3698,
+  item_count: 3,
+  subtotal_usd: 3907.99,
   free_shipping_threshold_usd: 1500,
   free_shipping_remaining_usd: 0,
   qualifies_free_shipping: true,
@@ -188,3 +205,45 @@ export const SAMPLE_RECOMMENDATIONS = {
     },
   ],
 };
+
+/** Sample product context for the warranty-options widget's preview mode. */
+export const SAMPLE_WARRANTY_PRODUCT = { ...SAMPLE_PRODUCTS[2] };
+
+/**
+ * Sample ASUS Premium Care (APC) plans for the warranty-options widget's
+ * preview mode — mirrors WARRANTY_PLANS in the backend repo's
+ * lib/catalog.js exactly (id, name, provider, duration_years, price_usd,
+ * includes_adp, covers[], description).
+ */
+export const SAMPLE_WARRANTY_PLANS = [
+  {
+    id: 'apc-1yr',
+    name: 'ASUS Premium Care — 1-Year Extension',
+    provider: 'ASUS Premium Care (APC)',
+    duration_years: 1,
+    price_usd: 79.99,
+    includes_adp: false,
+    covers: ['Warranty extension only (no accidental damage)'],
+    description: 'Extends ASUS\'s standard warranty on this laptop by 1 year. Does not cover accidental damage.',
+  },
+  {
+    id: 'apc-2yr',
+    name: 'ASUS Premium Care — 2-Year Extension',
+    provider: 'ASUS Premium Care (APC)',
+    duration_years: 2,
+    price_usd: 149.99,
+    includes_adp: false,
+    covers: ['Warranty extension only (no accidental damage)'],
+    description: 'Extends ASUS\'s standard warranty on this laptop by 2 years. Does not cover accidental damage.',
+  },
+  {
+    id: 'apc-3yr-adp',
+    name: 'ASUS Premium Care — 3-Year Extension + Accidental Damage Protection (ADP)',
+    provider: 'ASUS Premium Care (APC)',
+    duration_years: 3,
+    price_usd: 209.99,
+    includes_adp: true,
+    covers: ['Warranty extension', 'Accidental Damage Protection (ADP): drops, spills, electrical surges, cracked LCD'],
+    description: 'Extends ASUS\'s standard warranty on this laptop by 3 years and adds Accidental Damage Protection (ADP) for drops, spills, electrical surges, and cracked LCD screens.',
+  },
+];

@@ -65,6 +65,7 @@ function renderItems(block, items, bridge) {
       img.src = item.image_url;
       img.alt = item.name || '';
       img.loading = 'lazy';
+      img.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
       img.onerror = () => img.parentNode.replaceChild(colorDiv(), img);
       media.appendChild(img);
     } else {
@@ -73,58 +74,62 @@ function renderItems(block, items, bridge) {
     card.appendChild(media);
 
     const info = document.createElement('div');
-    info.className = 'browse-products-by-series-info';
-    info.style.cssText = `background:${theme.bg ?? '#1a1a1a'};color:${theme.fg ?? '#fff'};`;
+    info.className = 'browse-products-by-series-info asus-editorial-panel';
 
-    const brandLabel = document.createElement('span');
-    brandLabel.className = 'browse-products-by-series-brand-label';
-    brandLabel.style.color = theme.accent;
-    brandLabel.style.fontFamily = theme.headingFont;
-    brandLabel.textContent = theme.label;
-    info.appendChild(brandLabel);
-
-    const badgeRow = document.createElement('div');
-    badgeRow.className = 'browse-products-by-series-badge-row';
-    if (item.category) {
-      const badge = document.createElement('span');
-      badge.className = 'browse-products-by-series-badge';
-      badge.style.background = theme.accent;
-      badge.textContent = item.category;
-      badgeRow.appendChild(badge);
-    }
-    if (typeof item.price_usd === 'number') {
-      const price = document.createElement('span');
-      price.className = 'browse-products-by-series-price';
-      price.textContent = formatPrice(item.price_usd);
-      badgeRow.appendChild(price);
-    }
-    info.appendChild(badgeRow);
+    const badge = document.createElement('span');
+    badge.className = 'browse-products-by-series-badge asus-pill-badge';
+    badge.style.setProperty('--brand-accent', theme.accent);
+    badge.textContent = item.category || theme.label;
+    info.appendChild(badge);
 
     const title = document.createElement('h3');
-    title.className = 'browse-products-by-series-title';
+    title.className = 'browse-products-by-series-title asus-editorial-name';
     title.textContent = item.name || '';
     info.appendChild(title);
 
     const spec = specLine(item);
     if (spec) {
       const specEl = document.createElement('p');
-      specEl.className = 'browse-products-by-series-desc';
+      specEl.className = 'browse-products-by-series-desc asus-editorial-muted';
       specEl.textContent = spec;
       info.appendChild(specEl);
     }
 
-    const btn = document.createElement('button');
-    btn.className = 'browse-products-by-series-cta asus-press';
-    btn.type = 'button';
-    btn.textContent = 'View Details';
-    if (bridge) {
-      btn.addEventListener('click', () => bridge.sendMessage(`Tell me more about ${item.name}`));
+    if (typeof item.price_usd === 'number') {
+      const price = document.createElement('span');
+      price.className = 'browse-products-by-series-price';
+      price.style.color = theme.accent;
+      price.textContent = formatPrice(item.price_usd);
+      info.appendChild(price);
     }
-    info.appendChild(btn);
+
+    const ctaRow = document.createElement('div');
+    ctaRow.className = 'browse-products-by-series-cta-row';
+
+    const detailsBtn = document.createElement('button');
+    detailsBtn.className = 'browse-products-by-series-cta-secondary asus-pill-cta asus-pill-cta--quiet asus-pill-cta--small';
+    detailsBtn.type = 'button';
+    detailsBtn.textContent = 'View Details';
+    if (bridge) {
+      detailsBtn.addEventListener('click', () => bridge.sendMessage(`Tell me more about ${item.name}`));
+    }
+    ctaRow.appendChild(detailsBtn);
+
+    const cartBtn = document.createElement('button');
+    cartBtn.className = 'browse-products-by-series-cta-primary asus-pill-cta asus-pill-cta--small asus-press';
+    cartBtn.type = 'button';
+    cartBtn.style.setProperty('--brand-accent', theme.accent);
+    cartBtn.textContent = 'Add to Cart';
+    if (bridge) {
+      cartBtn.addEventListener('click', () => bridge.sendMessage(`Add the ${item.name} to my cart`));
+    }
+    ctaRow.appendChild(cartBtn);
+
+    info.appendChild(ctaRow);
 
     if (item.buy_url) {
       const realLink = document.createElement('a');
-      realLink.className = 'browse-products-by-series-real-link';
+      realLink.className = 'browse-products-by-series-real-link asus-editorial-footer-link';
       realLink.href = item.buy_url;
       realLink.target = '_blank';
       realLink.rel = 'noopener noreferrer';
@@ -145,7 +150,7 @@ function renderItems(block, items, bridge) {
     b.className = `browse-products-by-series-arrow browse-products-by-series-arrow-${dir}`;
     b.setAttribute('aria-label', dir === 'left' ? 'Scroll left' : 'Scroll right');
     b.textContent = dir === 'left' ? '◀' : '▶';
-    const scroll = () => track.scrollBy({ left: dir === 'left' ? -236 : 236, behavior: 'smooth' });
+    const scroll = () => track.scrollBy({ left: dir === 'left' ? -300 : 300, behavior: 'smooth' });
     b.addEventListener('click', scroll);
     b.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); scroll(); } });
     return b;
