@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('../../scripts/asus-motion.css');
+@import url('../../scripts/asus-brand.css');
+@import url('../../scripts/asus-editorial.css');
+
+/* Required for correct iframe sizing — AEM section margins inflate shadow body */
+main > div,
+main > .section,
+main > .section:first-of-type {
+  margin: 0;
+}
+main > .section > div {
+  max-width: none;
+  padding: 0;
+}
+body {
+  overflow: auto;
+}
+
+main .warranty-options {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  padding: 8px;
+  max-width: 940px;
+}
+
+main .warranty-options .warranty-options-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0 0 16px 4px;
+}
+
+main .warranty-options .warranty-options-heading {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: inherit;
+}
+
+main .warranty-options .warranty-options-note {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.4;
+  max-width: 640px;
+}
+
+main .warranty-options .warranty-options-empty {
+  font-size: 13px;
+  opacity: 0.75;
+  padding: 20px;
+  text-align: center;
+}
+
+main .warranty-options .warranty-options-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+@media (max-width: 720px) {
+  main .warranty-options .warranty-options-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+main .warranty-options .warranty-options-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px 20px;
+  border-radius: 14px;
+  border-top: 3px solid var(--brand-accent, #006ce1);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+main .warranty-options .warranty-options-featured {
+  align-self: flex-start;
+}
+
+main .warranty-options .warranty-options-name {
+  margin: 4px 0 0;
+  font-size: 17px;
+  line-height: 1.3;
+}
+
+main .warranty-options .warranty-options-price {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+main .warranty-options .warranty-options-desc {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+main .warranty-options .warranty-options-checklist {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+main .warranty-options .warranty-options-checklist li {
+  padding-left: 18px;
+  position: relative;
+}
+
+main .warranty-options .warranty-options-checklist li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--brand-accent, #006ce1);
+  font-weight: 700;
+}
+
+main .warranty-options .warranty-options-cta {
+  margin-top: auto;
+}
+
+@media (prefers-color-scheme: dark) {
+  main .warranty-options { background: #171310; }
+}
+body.dark main .warranty-options { background: #171310; }
