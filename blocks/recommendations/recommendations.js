@@ -75,7 +75,7 @@ function renderRecommendations(block, payload, bridge) {
       img.src = item.image_url;
       img.alt = item.name || '';
       img.loading = 'lazy';
-      img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+      img.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
       img.onerror = () => { media.style.background = `linear-gradient(135deg, ${fallbackColor}, #00000022)`; img.remove(); };
       media.appendChild(img);
     } else {
@@ -90,17 +90,22 @@ function renderRecommendations(block, payload, bridge) {
     card.appendChild(media);
 
     const info = document.createElement('div');
-    info.className = 'recommendations-info';
-    info.style.cssText = `background:${theme.bg ?? '#1a1a1a'};color:${theme.fg ?? '#fff'};`;
+    info.className = 'recommendations-info asus-editorial-panel';
+
+    const badge = document.createElement('span');
+    badge.className = 'recommendations-badge asus-pill-badge';
+    badge.style.setProperty('--brand-accent', theme.accent);
+    badge.textContent = item.category || theme.label;
+    info.appendChild(badge);
 
     const name = document.createElement('h4');
-    name.className = 'recommendations-name';
+    name.className = 'recommendations-name asus-editorial-name';
     name.textContent = item.name || '';
     info.appendChild(name);
 
     if (item.reason) {
       const reason = document.createElement('p');
-      reason.className = 'recommendations-reason';
+      reason.className = 'recommendations-reason asus-editorial-muted';
       reason.textContent = item.reason;
       info.appendChild(reason);
     }
@@ -108,14 +113,15 @@ function renderRecommendations(block, payload, bridge) {
     if (typeof item.price_usd === 'number') {
       const price = document.createElement('span');
       price.className = 'recommendations-price';
+      price.style.color = theme.accent;
       price.textContent = formatPrice(item.price_usd);
       info.appendChild(price);
     }
 
     const cartBtn = document.createElement('button');
     cartBtn.type = 'button';
-    cartBtn.className = 'recommendations-cta asus-press';
-    cartBtn.style.background = theme.accent;
+    cartBtn.className = 'recommendations-cta asus-pill-cta asus-pill-cta--small asus-press';
+    cartBtn.style.setProperty('--brand-accent', theme.accent);
     cartBtn.textContent = 'Add to Cart';
     if (bridge) {
       cartBtn.addEventListener('click', () => bridge.sendMessage(`Add the ${item.name} to my cart`));

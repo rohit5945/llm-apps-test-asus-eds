@@ -48,7 +48,7 @@ function renderCart(block, cart, bridge) {
 
   if (items.length === 0) {
     const empty = document.createElement('div');
-    empty.className = 'asus-cart-empty';
+    empty.className = 'asus-cart-empty asus-editorial-tint';
     empty.textContent = 'Your cart is empty — ask me to find a laptop and add it to your cart!';
     wrapper.appendChild(empty);
     block.appendChild(wrapper);
@@ -79,9 +79,12 @@ function renderCart(block, cart, bridge) {
   const list = document.createElement('div');
   list.className = 'asus-cart-list';
 
-  items.forEach((item, i) => {
+  const productItems = items.filter((i) => i.item_type !== 'warranty');
+  const warrantyItems = items.filter((i) => i.item_type === 'warranty');
+
+  productItems.forEach((item, i) => {
     const row = document.createElement('div');
-    row.className = 'asus-cart-row asus-fade-in-up';
+    row.className = 'asus-cart-row asus-editorial-panel asus-fade-in-up';
     row.style.animationDelay = `${i * 50}ms`;
 
     const thumb = document.createElement('div');
@@ -90,8 +93,8 @@ function renderCart(block, cart, bridge) {
       const img = document.createElement('img');
       img.src = item.image_url;
       img.alt = item.name || '';
-      img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
-      img.onerror = () => { thumb.style.background = '#1a1a1a'; img.remove(); };
+      img.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
+      img.onerror = () => { thumb.style.background = '#f0efec'; img.remove(); };
       thumb.appendChild(img);
     } else {
       thumb.style.background = 'linear-gradient(135deg, #378ef0, #00000022)';
@@ -101,10 +104,10 @@ function renderCart(block, cart, bridge) {
     const info = document.createElement('div');
     info.className = 'asus-cart-info';
     const name = document.createElement('span');
-    name.className = 'asus-cart-name';
+    name.className = 'asus-cart-name asus-editorial-name';
     name.textContent = item.name || '';
     const price = document.createElement('span');
-    price.className = 'asus-cart-unit-price';
+    price.className = 'asus-cart-unit-price asus-editorial-muted';
     price.textContent = `${formatPrice(item.price_usd)} each`;
     info.appendChild(name);
     info.appendChild(price);
@@ -152,6 +155,67 @@ function renderCart(block, cart, bridge) {
     row.appendChild(lineTotal);
 
     list.appendChild(row);
+
+    // Nested warranty plan sub-rows attached to this product — lighter
+    // visual treatment (shield icon, no thumbnail) than a full laptop row.
+    warrantyItems
+      .filter((w) => w.for_product_id === item.product_id)
+      .forEach((w) => {
+        const subRow = document.createElement('div');
+        subRow.className = 'asus-cart-warranty-row asus-fade-in-up';
+
+        const icon = document.createElement('span');
+        icon.className = 'asus-cart-warranty-icon';
+        icon.textContent = '🛡️';
+        subRow.appendChild(icon);
+
+        const wName = document.createElement('span');
+        wName.className = 'asus-cart-warranty-name';
+        wName.textContent = w.name || '';
+        subRow.appendChild(wName);
+
+        const wPrice = document.createElement('span');
+        wPrice.className = 'asus-cart-warranty-price';
+        wPrice.textContent = formatPrice(w.price_usd);
+        subRow.appendChild(wPrice);
+
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.className = 'asus-cart-warranty-remove';
+        removeBtn.setAttribute('aria-label', `Remove ${w.name}`);
+        removeBtn.textContent = '✕';
+        if (bridge) {
+          removeBtn.addEventListener('click', () => bridge.sendMessage(
+            cartInstruction(sessionId, `remove the "${w.name}" protection plan for "${item.name}"`),
+          ));
+        }
+        subRow.appendChild(removeBtn);
+
+        list.appendChild(subRow);
+      });
+
+    // Inline warranty upsell prompt — shown when view_cart flags this
+    // product line with warranty_upsell: true (no plan attached yet).
+    if (item.warranty_upsell === true) {
+      const upsell = document.createElement('div');
+      upsell.className = 'asus-cart-upsell asus-editorial-tint asus-fade-in-up';
+
+      const upsellText = document.createElement('span');
+      upsellText.className = 'asus-cart-upsell-text';
+      upsellText.textContent = `🛡️ Protect your ${item.name} with ASUS Premium Care`;
+      upsell.appendChild(upsellText);
+
+      const upsellBtn = document.createElement('button');
+      upsellBtn.type = 'button';
+      upsellBtn.className = 'asus-cart-upsell-btn asus-pill-cta asus-pill-cta--outline asus-pill-cta--small';
+      upsellBtn.textContent = 'View plans';
+      if (bridge) {
+        upsellBtn.addEventListener('click', () => bridge.sendMessage(`Show me warranty options for the ${item.name}`));
+      }
+      upsell.appendChild(upsellBtn);
+
+      list.appendChild(upsell);
+    }
   });
   wrapper.appendChild(list);
 
@@ -165,7 +229,7 @@ function renderCart(block, cart, bridge) {
 
   const checkoutBtn = document.createElement('button');
   checkoutBtn.type = 'button';
-  checkoutBtn.className = 'asus-cart-checkout asus-press';
+  checkoutBtn.className = 'asus-cart-checkout asus-pill-cta asus-press';
   checkoutBtn.textContent = 'Checkout';
   if (bridge) {
     checkoutBtn.addEventListener('click', () => bridge.sendMessage(cartInstruction(sessionId, 'check out')));

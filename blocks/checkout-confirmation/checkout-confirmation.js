@@ -2,6 +2,7 @@ import { formatPrice } from '../../scripts/asus-brand.js';
 
 const SAMPLE_CONFIRMATION = {
   session_id: 'sess_preview-demo',
+  order_id: 'ASUS-2026-48213',
   items: [
     { product_id: 'tuf-gaming-a15-fa507', name: 'TUF Gaming A15 (FA507)', price_usd: 999, quantity: 1 },
     { product_id: 'rog-gladius-iii-mouse', name: 'ROG Gladius III Wireless Mouse', price_usd: 99, quantity: 1 },
@@ -63,7 +64,7 @@ function renderConfirmation(block, order, bridge) {
 
   card.appendChild(renderCheckmark());
 
-  const title = document.createElement('h3');
+  const title = document.createElement('h2');
   title.className = 'checkout-confirmation-title asus-fade-in-up';
   title.style.animationDelay = '120ms';
   title.textContent = items.length ? 'Order Confirmed!' : 'Nothing to confirm yet';
@@ -78,9 +79,20 @@ function renderConfirmation(block, order, bridge) {
     return;
   }
 
+  if (order.order_id) {
+    const orderId = document.createElement('p');
+    orderId.className = 'checkout-confirmation-order-id asus-fade-in-up';
+    orderId.style.animationDelay = '160ms';
+    orderId.textContent = `Order #${order.order_id}`;
+    card.appendChild(orderId);
+  }
+
+  const summary = document.createElement('div');
+  summary.className = 'checkout-confirmation-summary asus-editorial-tint asus-fade-in-up';
+  summary.style.animationDelay = '200ms';
+
   const list = document.createElement('div');
-  list.className = 'checkout-confirmation-list asus-fade-in-up';
-  list.style.animationDelay = '200ms';
+  list.className = 'checkout-confirmation-list';
   items.forEach((item) => {
     const row = document.createElement('div');
     row.className = 'checkout-confirmation-row';
@@ -94,26 +106,33 @@ function renderConfirmation(block, order, bridge) {
     row.appendChild(price);
     list.appendChild(row);
   });
-  card.appendChild(list);
+  summary.appendChild(list);
 
   const totalRow = document.createElement('div');
-  totalRow.className = 'checkout-confirmation-total asus-fade-in-up';
-  totalRow.style.animationDelay = '260ms';
+  totalRow.className = 'checkout-confirmation-total';
   const totalLabel = document.createElement('span');
   totalLabel.textContent = 'Total';
   const totalValue = document.createElement('span');
   totalValue.textContent = formatPrice(order.subtotal_usd || 0);
   totalRow.appendChild(totalLabel);
   totalRow.appendChild(totalValue);
-  card.appendChild(totalRow);
+  summary.appendChild(totalRow);
+
+  card.appendChild(summary);
 
   if (order.qualifies_free_shipping) {
     const banner = document.createElement('p');
     banner.className = 'checkout-confirmation-shipping asus-fade-in-up';
-    banner.style.animationDelay = '320ms';
+    banner.style.animationDelay = '260ms';
     banner.textContent = '🎉 This order shipped free!';
     card.appendChild(banner);
   }
+
+  const reassurance = document.createElement('p');
+  reassurance.className = 'checkout-confirmation-reassurance asus-fade-in-up';
+  reassurance.style.animationDelay = '300ms';
+  reassurance.textContent = 'A confirmation email is on its way. Your new ASUS gear will ship soon — welcome to the family.';
+  card.appendChild(reassurance);
 
   if (order.checkout_note) {
     const note = document.createElement('p');
@@ -127,7 +146,7 @@ function renderConfirmation(block, order, bridge) {
 
   const continueBtn = document.createElement('button');
   continueBtn.type = 'button';
-  continueBtn.className = 'checkout-confirmation-cta asus-press';
+  continueBtn.className = 'checkout-confirmation-cta asus-pill-cta asus-pill-cta--block asus-press';
   continueBtn.textContent = 'Continue Shopping';
   if (bridge) {
     continueBtn.addEventListener('click', () => bridge.sendMessage('Show me more ASUS laptops'));

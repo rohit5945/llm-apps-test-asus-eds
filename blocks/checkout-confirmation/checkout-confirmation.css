@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 @import url('../../scripts/asus-motion.css');
 @import url('../../scripts/asus-brand.css');
+@import url('../../scripts/asus-editorial.css');
 
 /* Required for correct iframe sizing — AEM section margins inflate shadow body */
 main > div,
@@ -19,7 +20,7 @@ body {
 main .checkout-confirmation {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   padding: 8px;
-  max-width: 420px;
+  max-width: 460px;
 }
 
 main .checkout-confirmation .checkout-confirmation-card {
@@ -28,14 +29,16 @@ main .checkout-confirmation .checkout-confirmation-card {
   align-items: center;
   text-align: center;
   gap: 10px;
-  padding: 24px 20px;
-  border-radius: 12px;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.14);
+  padding: 30px 24px;
+  border-radius: 16px;
+  background: var(--asus-editorial-bg, #faf7f2);
+  color: var(--asus-editorial-ink, #211d18);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
 }
 
 main .checkout-confirmation .checkout-confirmation-badge {
-  width: 64px;
-  height: 64px;
+  width: 68px;
+  height: 68px;
 }
 
 main .checkout-confirmation .checkout-confirmation-checkmark {
@@ -44,7 +47,7 @@ main .checkout-confirmation .checkout-confirmation-checkmark {
 }
 
 main .checkout-confirmation .checkout-confirmation-circle {
-  stroke: #2dca72;
+  stroke: #2b8a3e;
   stroke-width: 3;
   stroke-dasharray: 151;
   stroke-dashoffset: 151;
@@ -52,7 +55,7 @@ main .checkout-confirmation .checkout-confirmation-circle {
 }
 
 main .checkout-confirmation .checkout-confirmation-check {
-  stroke: #2dca72;
+  stroke: #2b8a3e;
   stroke-width: 4;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -71,19 +74,36 @@ main .checkout-confirmation .checkout-confirmation-check {
 
 main .checkout-confirmation .checkout-confirmation-title {
   margin: 0;
-  font-size: 18px;
-  font-weight: 700;
+  font-family: var(--asus-editorial-serif);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 24px;
   color: inherit;
 }
 
-main .checkout-confirmation .checkout-confirmation-list {
+main .checkout-confirmation .checkout-confirmation-order-id {
+  margin: 0;
+  font-size: 12px;
+  font-family: monospace, 'Courier New', monospace;
+  letter-spacing: 0.04em;
+  opacity: 0.65;
+}
+
+main .checkout-confirmation .checkout-confirmation-summary {
   width: 100%;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-sizing: border-box;
+}
+
+main .checkout-confirmation .checkout-confirmation-list {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding: 12px 0;
-  border-top: 1px solid rgba(120, 120, 120, 0.2);
-  border-bottom: 1px solid rgba(120, 120, 120, 0.2);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--asus-editorial-hairline, rgba(33, 29, 24, 0.14));
 }
 
 main .checkout-confirmation .checkout-confirmation-row {
@@ -115,41 +135,31 @@ main .checkout-confirmation .checkout-confirmation-shipping {
   margin: 0;
   font-size: 12.5px;
   font-weight: 600;
-  color: #2dca72;
+  color: #2b8a3e;
+}
+
+main .checkout-confirmation .checkout-confirmation-reassurance {
+  margin: 4px 0 0;
+  font-size: 12px;
+  font-style: italic;
+  line-height: 1.5;
+  opacity: 0.75;
 }
 
 main .checkout-confirmation .checkout-confirmation-note {
   margin: 0;
-  font-size: 11px;
-  opacity: 0.65;
+  font-size: 10.5px;
+  opacity: 0.55;
   font-style: italic;
   line-height: 1.4;
 }
 
 main .checkout-confirmation .checkout-confirmation-cta-row {
   width: 100%;
-  margin-top: 4px;
-}
-
-main .checkout-confirmation .checkout-confirmation-cta {
-  width: 100%;
-  border: none;
-  border-radius: 6px;
-  background: #006ce1;
-  color: #fff;
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 600;
-  padding: 10px 0;
-  cursor: pointer;
-  transition: opacity 0.15s;
-}
-
-main .checkout-confirmation .checkout-confirmation-cta:hover {
-  opacity: 0.88;
+  margin-top: 6px;
 }
 
 @media (prefers-color-scheme: dark) {
-  main .checkout-confirmation .checkout-confirmation-card { background: #111; color: #fff; }
+  main .checkout-confirmation .checkout-confirmation-card { background: var(--asus-editorial-bg-dark, #241f1a); color: var(--asus-editorial-ink-dark, #f3eee7); }
 }
-body.dark main .checkout-confirmation .checkout-confirmation-card { background: #111; color: #fff; }
+body.dark main .checkout-confirmation .checkout-confirmation-card { background: var(--asus-editorial-bg-dark, #241f1a); color: var(--asus-editorial-ink-dark, #f3eee7); }

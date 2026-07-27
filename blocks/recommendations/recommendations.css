@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 @import url('../../scripts/asus-motion.css');
 @import url('../../scripts/asus-brand.css');
+@import url('../../scripts/asus-editorial.css');
 
 /* Required for correct iframe sizing — AEM section margins inflate shadow body */
 main > div,
@@ -19,11 +20,11 @@ body {
 main .recommendations {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   padding: 8px;
-  max-width: 880px;
+  max-width: 940px;
 }
 
 main .recommendations .recommendations-heading {
-  margin: 0 0 10px 4px;
+  margin: 0 0 12px 4px;
   font-size: 15px;
   font-weight: 700;
   color: inherit;
@@ -39,11 +40,12 @@ main .recommendations .recommendations-empty {
 main .recommendations .recommendations-track {
   display: flex;
   flex-direction: row;
-  gap: 16px;
+  gap: 18px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  padding: 4px 4px 10px;
 }
 
 main .recommendations .recommendations-track::-webkit-scrollbar {
@@ -51,32 +53,32 @@ main .recommendations .recommendations-track::-webkit-scrollbar {
 }
 
 main .recommendations .recommendations-card {
-  flex: 0 0 210px;
-  height: 300px;
-  border-radius: 10px;
+  flex: 0 0 240px;
+  height: 370px;
+  border-radius: 14px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   scroll-snap-align: start;
   box-sizing: border-box;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   border-top: 3px solid var(--brand-accent, #006ce1);
 }
 
 main .recommendations .recommendations-media {
   position: relative;
-  flex: 5;
+  flex: 0 0 auto;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
-  background: #f0f0f0;
+  background: #f0efec;
 }
 
 main .recommendations .recommendations-tag {
   position: absolute;
-  top: 6px;
-  left: 6px;
-  background: rgba(0, 0, 0, 0.65);
+  top: 8px;
+  left: 8px;
+  background: rgba(0, 0, 0, 0.6);
   color: #fff;
   font-size: 10px;
   font-weight: 700;
@@ -87,63 +89,45 @@ main .recommendations .recommendations-tag {
 }
 
 main .recommendations .recommendations-info {
-  flex: 5;
-  padding: 10px 12px;
+  flex: 1;
+  padding: 14px 16px 16px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 5px;
   min-height: 0;
 }
 
 main .recommendations .recommendations-name {
-  margin: 0;
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.25;
+  margin: 4px 0 0;
+  font-size: 15.5px;
+  line-height: 1.28;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  color: inherit;
 }
 
 main .recommendations .recommendations-reason {
   margin: 0;
   font-size: 10.5px;
   line-height: 1.3;
-  opacity: 0.78;
   font-style: italic;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  color: inherit;
 }
 
 main .recommendations .recommendations-price {
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 700;
-  color: inherit;
 }
 
 main .recommendations .recommendations-cta {
   margin-top: auto;
-  border: none;
-  border-radius: 6px;
-  color: #fff;
-  font-family: inherit;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 8px 0;
-  cursor: pointer;
-  transition: opacity 0.15s;
-}
-
-main .recommendations .recommendations-cta:hover {
-  opacity: 0.88;
 }
 
 @media (prefers-color-scheme: dark) {
-  main .recommendations { background: #111; }
+  main .recommendations { background: #171310; }
 }
-body.dark main .recommendations { background: #111; }
+body.dark main .recommendations { background: #171310; }

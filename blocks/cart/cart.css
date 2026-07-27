@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 @import url('../../scripts/asus-motion.css');
 @import url('../../scripts/asus-brand.css');
+@import url('../../scripts/asus-editorial.css');
 
 /* Required for correct iframe sizing — AEM section margins inflate shadow body */
 main > div,
@@ -19,42 +20,37 @@ body {
 main .cart {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   padding: 8px;
-  max-width: 480px;
+  max-width: 520px;
 }
 
 main .cart .asus-cart-empty {
   font-size: 13px;
-  opacity: 0.75;
+  opacity: 0.8;
   padding: 24px;
   text-align: center;
-  border-radius: 10px;
-  background: rgba(120, 120, 120, 0.06);
 }
 
 main .cart .asus-cart-list {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  border-radius: 10px;
-  overflow: hidden;
 }
 
 main .cart .asus-cart-row {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px;
-  border-radius: 8px;
-  background: rgba(120, 120, 120, 0.06);
+  gap: 12px;
+  padding: 10px;
+  border-radius: 10px;
 }
 
 main .cart .asus-cart-thumb {
-  flex: 0 0 44px;
-  width: 44px;
-  height: 44px;
-  border-radius: 6px;
+  flex: 0 0 48px;
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
   overflow: hidden;
-  background: #f0f0f0;
+  background: #f0efec;
 }
 
 main .cart .asus-cart-info {
@@ -66,18 +62,14 @@ main .cart .asus-cart-info {
 }
 
 main .cart .asus-cart-name {
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 14px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: inherit;
 }
 
 main .cart .asus-cart-unit-price {
   font-size: 11px;
-  opacity: 0.65;
-  color: inherit;
 }
 
 main .cart .asus-cart-stepper {
@@ -92,7 +84,7 @@ main .cart .asus-cart-step-btn {
   height: 22px;
   border-radius: 50%;
   border: none;
-  background: rgba(120, 120, 120, 0.18);
+  background: rgba(120, 120, 120, 0.16);
   color: inherit;
   font-size: 14px;
   line-height: 1;
@@ -100,7 +92,7 @@ main .cart .asus-cart-step-btn {
 }
 
 main .cart .asus-cart-step-btn:hover {
-  background: rgba(120, 120, 120, 0.32);
+  background: rgba(120, 120, 120, 0.28);
 }
 
 main .cart .asus-cart-qty {
@@ -119,8 +111,64 @@ main .cart .asus-cart-line-total {
   color: inherit;
 }
 
+/* Nested warranty plan sub-row — lighter treatment than a full product row:
+   no thumbnail, just a shield icon + name + price + remove. */
+main .cart .asus-cart-warranty-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px 6px 26px;
+  margin-top: -4px;
+  font-size: 11.5px;
+  opacity: 0.85;
+}
+
+main .cart .asus-cart-warranty-icon {
+  font-size: 12px;
+}
+
+main .cart .asus-cart-warranty-name {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+main .cart .asus-cart-warranty-price {
+  font-weight: 600;
+}
+
+main .cart .asus-cart-warranty-remove {
+  border: none;
+  background: transparent;
+  color: inherit;
+  opacity: 0.6;
+  cursor: pointer;
+  font-size: 11px;
+  padding: 2px 4px;
+}
+
+main .cart .asus-cart-warranty-remove:hover {
+  opacity: 1;
+}
+
+/* Inline warranty upsell prompt shown under an unprotected product line. */
+main .cart .asus-cart-upsell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  margin: -2px 0 2px 26px;
+}
+
+main .cart .asus-cart-upsell-text {
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
 main .cart .asus-cart-footer {
-  margin-top: 12px;
+  margin-top: 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -128,25 +176,9 @@ main .cart .asus-cart-footer {
 }
 
 main .cart .asus-cart-subtotal {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
   color: inherit;
-}
-
-main .cart .asus-cart-checkout {
-  border: none;
-  border-radius: 6px;
-  background: #006ce1;
-  color: #fff;
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 600;
-  padding: 10px 20px;
-  cursor: pointer;
-}
-
-main .cart .asus-cart-checkout:hover {
-  opacity: 0.88;
 }
 
 main .cart .asus-cart-shipping {
@@ -173,13 +205,11 @@ main .cart .asus-cart-shipping-track {
 main .cart .asus-cart-shipping-fill {
   height: 100%;
   border-radius: 999px;
-  background: linear-gradient(90deg, #2dca72, #006ce1);
+  background: linear-gradient(90deg, #2b8a3e, #006ce1);
   transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @media (prefers-color-scheme: dark) {
-  main .cart { background: #111; color: #fff; }
-  main .cart .asus-cart-row,
-  main .cart .asus-cart-empty { background: rgba(255, 255, 255, 0.06); }
+  main .cart { background: #171310; color: #fff; }
 }
-body.dark main .cart { background: #111; color: #fff; }
+body.dark main .cart { background: #171310; color: #fff; }
