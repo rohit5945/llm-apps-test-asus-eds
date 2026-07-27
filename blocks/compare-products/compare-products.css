@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 @import url('../../scripts/asus-motion.css');
 @import url('../../scripts/asus-brand.css');
+@import url('../../scripts/asus-editorial.css');
 
 /* Required for correct iframe sizing — AEM section margins inflate shadow body */
 main > div,
@@ -19,7 +20,7 @@ body {
 main .compare-products {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   padding: 8px;
-  max-width: 900px;
+  max-width: 960px;
   overflow-x: auto;
 }
 
@@ -30,26 +31,9 @@ main .compare-products .compare-products-heading {
   color: inherit;
 }
 
-main .compare-products .compare-products-brand-label {
-  font-size: 9.5px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  opacity: 0.85;
-}
-
 main .compare-products .compare-products-real-link {
-  font-size: 10px;
-  font-weight: 600;
+  font-size: 10.5px;
   text-align: center;
-  color: inherit;
-  opacity: 0.7;
-  text-decoration: none;
-}
-
-main .compare-products .compare-products-real-link:hover {
-  opacity: 1;
-  text-decoration: underline;
 }
 
 main .compare-products .compare-products-empty {
@@ -61,11 +45,11 @@ main .compare-products .compare-products-empty {
 
 main .compare-products .compare-products-table {
   display: grid;
-  grid-template-columns: 100px repeat(var(--compare-cols, 2), minmax(160px, 1fr));
-  border-radius: 10px;
+  grid-template-columns: 100px repeat(var(--compare-cols, 2), minmax(180px, 1fr));
+  border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
-  min-width: 500px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  min-width: 520px;
 }
 
 main .compare-products .compare-products-row {
@@ -74,67 +58,49 @@ main .compare-products .compare-products-row {
   grid-column: 1 / -1;
 }
 
-main .compare-products .compare-products-header-row {
-  background: transparent;
-}
-
 main .compare-products .compare-products-cell {
-  padding: 8px 10px;
-  font-size: 12px;
+  padding: 10px 12px;
+  font-size: 12.5px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid rgba(120, 120, 120, 0.18);
+  border-bottom: 1px solid var(--asus-editorial-hairline, rgba(33, 29, 24, 0.14));
   color: inherit;
 }
 
 main .compare-products .compare-products-label-cell {
   font-weight: 600;
-  opacity: 0.65;
-  background: rgba(120, 120, 120, 0.06);
+  opacity: 0.62;
 }
 
 main .compare-products .compare-products-header-cell {
   flex-direction: column;
   align-items: stretch;
-  gap: 6px;
-  padding: 10px;
+  gap: 8px;
+  padding: 14px;
   border-top: 3px solid var(--brand-accent, #006ce1);
-  background: rgba(120, 120, 120, 0.04);
 }
 
 main .compare-products .compare-products-media {
   width: 100%;
-  aspect-ratio: 16 / 10;
-  border-radius: 6px;
+  aspect-ratio: 4 / 3;
+  border-radius: 8px;
   overflow: hidden;
-  background: #f0f0f0;
+  background: #f0efec;
 }
 
 main .compare-products .compare-products-name {
   margin: 0;
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 15px;
   line-height: 1.25;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  color: inherit;
 }
 
-main .compare-products .compare-products-cta {
-  border: none;
-  border-radius: 6px;
-  color: #fff;
-  font-family: inherit;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 6px 0;
-  cursor: pointer;
-}
-
-main .compare-products .compare-products-cta:hover {
-  opacity: 0.88;
+main .compare-products .compare-products-header-price {
+  font-size: 13px;
+  font-weight: 700;
 }
 
 main .compare-products .compare-products-winner {
@@ -147,13 +113,44 @@ main .compare-products .compare-products-winner::after {
   margin-left: 6px;
   font-size: 10px;
   font-weight: 700;
-  color: #2dca72;
+  color: #2b8a3e;
+}
+
+main .compare-products .compare-products-picker {
+  margin-top: 16px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+main .compare-products .compare-products-picker-label {
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.75;
+}
+
+main .compare-products .compare-products-picker-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+main .compare-products .compare-products-picker-select {
+  flex: 1;
+  min-width: 200px;
+  padding: 9px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--asus-editorial-hairline, rgba(33, 29, 24, 0.14));
+  background: #fff;
+  color: inherit;
+  font-family: inherit;
+  font-size: 12.5px;
 }
 
 @media (prefers-color-scheme: dark) {
-  main .compare-products { background: #111; color: #fff; }
-  main .compare-products .compare-products-cell { border-bottom-color: rgba(255, 255, 255, 0.12); }
-  main .compare-products .compare-products-label-cell,
-  main .compare-products .compare-products-header-cell { background: rgba(255, 255, 255, 0.06); }
+  main .compare-products { background: #171310; color: #fff; }
+  main .compare-products .compare-products-picker-select { background: rgba(255, 255, 255, 0.08); }
 }
-body.dark main .compare-products { background: #111; color: #fff; }
+body.dark main .compare-products { background: #171310; color: #fff; }
+body.dark main .compare-products .compare-products-picker-select { background: rgba(255, 255, 255, 0.08); }

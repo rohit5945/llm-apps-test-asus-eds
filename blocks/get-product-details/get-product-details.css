@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 @import url('../../scripts/asus-motion.css');
 @import url('../../scripts/asus-brand.css');
+@import url('../../scripts/asus-editorial.css');
 
 /* Required for correct iframe sizing — AEM section margins inflate shadow body */
 main > div,
@@ -19,37 +20,42 @@ body {
 main .get-product-details {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   padding: 8px;
-  max-width: 680px;
+  max-width: 560px;
 }
 
+/* Full single-column layout: hero image on top, content panel below —
+   replaces the old side-by-side compact card. */
 main .get-product-details .detail-card {
   display: flex;
-  flex-direction: row;
-  min-height: 320px;
-  border-radius: 12px;
+  flex-direction: column;
+  border-radius: 14px;
   overflow: hidden;
   box-sizing: border-box;
   border-top: 3px solid var(--brand-accent, #006ce1);
 }
 
-main .get-product-details .detail-image {
-  flex: 0 0 240px;
-  height: auto;
+main .get-product-details .detail-hero {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: #f0efec;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-main .get-product-details .detail-image img {
+main .get-product-details .detail-hero img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
 }
 
 main .get-product-details .detail-content {
-  flex: 1;
-  padding: 16px;
+  padding: 20px 22px 24px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   box-sizing: border-box;
 }
 
@@ -59,9 +65,10 @@ main .get-product-details .detail-chip-row {
   flex-wrap: wrap;
 }
 
-main .get-product-details .detail-chip {
+main .get-product-details .detail-chip-oos {
   align-self: flex-start;
-  color: #fff;
+  background: rgba(120, 120, 120, 0.18);
+  color: inherit;
   font-size: 11px;
   font-weight: 600;
   padding: 3px 10px;
@@ -70,17 +77,10 @@ main .get-product-details .detail-chip {
   letter-spacing: 0.04em;
 }
 
-main .get-product-details .detail-chip-oos {
-  background: rgba(255, 255, 255, 0.18);
-  color: inherit;
-}
-
 main .get-product-details .detail-title {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1.25;
-  color: inherit;
+  margin: 2px 0 0;
+  font-size: 26px;
+  line-height: 1.2;
 }
 
 main .get-product-details .detail-price-row {
@@ -90,37 +90,34 @@ main .get-product-details .detail-price-row {
 }
 
 main .get-product-details .detail-price {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
-  color: inherit;
 }
 
 main .get-product-details .detail-rating {
-  font-size: 12px;
-  opacity: 0.85;
+  font-size: 12.5px;
+}
+
+main .get-product-details .detail-highlight {
+  margin: 0;
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.4;
   color: inherit;
 }
 
 main .get-product-details .detail-desc {
   margin: 0;
-  font-size: 13px;
-  line-height: 1.4;
-  opacity: 0.78;
-  color: inherit;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  font-size: 13.5px;
+  line-height: 1.55;
 }
 
 main .get-product-details .detail-spec-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4px 16px;
-  font-size: 12px;
-  padding: 8px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  gap: 6px 20px;
+  font-size: 12.5px;
+  padding: 4px 0;
 }
 
 main .get-product-details .detail-spec-row {
@@ -131,7 +128,7 @@ main .get-product-details .detail-spec-row {
 }
 
 main .get-product-details .detail-spec-label {
-  opacity: 0.65;
+  opacity: 0.6;
 }
 
 main .get-product-details .detail-spec-value {
@@ -142,60 +139,33 @@ main .get-product-details .detail-spec-value {
   text-overflow: ellipsis;
 }
 
+main .get-product-details .detail-crosssell {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 main .get-product-details .detail-cta-row {
-  margin-top: auto;
   display: flex;
   gap: 8px;
-}
-
-main .get-product-details .detail-cta {
-  flex: 1;
-  padding: 10px 0;
-  border: none;
-  border-radius: 6px;
-  color: #fff;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.15s;
-}
-
-main .get-product-details .detail-cta-secondary {
-  background: rgba(255, 255, 255, 0.14);
-  color: inherit;
-}
-
-main .get-product-details .detail-cta:hover {
-  opacity: 0.88;
+  flex-wrap: wrap;
 }
 
 main .get-product-details .detail-real-link {
   align-self: center;
-  font-size: 11px;
-  font-weight: 600;
-  color: inherit;
-  opacity: 0.7;
-  text-decoration: none;
-}
-
-main .get-product-details .detail-real-link:hover {
-  opacity: 1;
-  text-decoration: underline;
+  margin-top: 2px;
 }
 
 @media (max-width: 460px) {
-  main .get-product-details .detail-card {
+  main .get-product-details .detail-cta-row {
     flex-direction: column;
-    height: auto;
   }
-  main .get-product-details .detail-image {
-    flex: 0 0 auto;
-    height: 160px;
+  main .get-product-details .detail-cta-row .asus-pill-cta {
+    width: 100%;
   }
 }
 
-/* Dark theme — dim outer widget background only; keep palette-colored content panel. */
 @media (prefers-color-scheme: dark) {
-  main .get-product-details { background: #111; }
+  main .get-product-details { background: #171310; }
 }
-body.dark main .get-product-details { background: #111; }
+body.dark main .get-product-details { background: #171310; }
