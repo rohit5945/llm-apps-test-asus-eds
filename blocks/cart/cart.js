@@ -39,6 +39,53 @@ function cartInstruction(sessionId, action) {
   return `Using session_id ${sessionId}, ${action} in my ASUS cart.`;
 }
 
+// Renders the "Offers & Discounts" section — cart.offers is a 0-3 item
+// array only present/non-empty when the cart has an actual laptop in it
+// (see view_cart/manage_cart's structuredContent in the backend repo).
+// Purely informational: no buttons, unlike the warranty upsell prompt.
+function renderOffers(offers) {
+  const section = document.createElement('div');
+  section.className = 'asus-cart-offers asus-fade-in-up';
+
+  const heading = document.createElement('span');
+  heading.className = 'asus-cart-offers-heading';
+  heading.textContent = 'Offers & Discounts you may qualify for';
+  section.appendChild(heading);
+
+  offers.forEach((offer) => {
+    const row = document.createElement('div');
+    row.className = 'asus-cart-offer-row asus-editorial-panel';
+
+    const text = document.createElement('div');
+    text.className = 'asus-cart-offer-text';
+
+    const title = document.createElement('span');
+    title.className = 'asus-cart-offer-title asus-editorial-name';
+    title.textContent = offer.title || '';
+    text.appendChild(title);
+
+    const desc = document.createElement('span');
+    desc.className = 'asus-cart-offer-desc asus-editorial-muted';
+    desc.textContent = offer.description || '';
+    text.appendChild(desc);
+
+    row.appendChild(text);
+
+    // Evergreen offers (student/military discount, ASUS member perks) get
+    // no urgency badge — only bundle-type offers read as time-limited.
+    if (offer.type === 'bundle') {
+      const badge = document.createElement('span');
+      badge.className = 'asus-pill-badge asus-cart-offer-badge';
+      badge.textContent = 'Limited time';
+      row.appendChild(badge);
+    }
+
+    section.appendChild(row);
+  });
+
+  return section;
+}
+
 function renderCart(block, cart, bridge) {
   const items = cart?.items || [];
   const sessionId = cart?.session_id || '';
@@ -218,6 +265,14 @@ function renderCart(block, cart, bridge) {
     }
   });
   wrapper.appendChild(list);
+
+  // "Offers & Discounts" — right before checkout, where a shopper would
+  // see cross-sell/promo content in a real e-commerce cart. Only present
+  // when the backend flags actual laptop-bearing carts with offers.
+  const offers = cart?.offers;
+  if (Array.isArray(offers) && offers.length > 0) {
+    wrapper.appendChild(renderOffers(offers));
+  }
 
   const footer = document.createElement('div');
   footer.className = 'asus-cart-footer';

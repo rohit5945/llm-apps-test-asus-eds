@@ -9,7 +9,10 @@
  * instead of placeholder data. Extended again alongside the editorial
  * redesign to cover the new warranty-options widget and the cart's
  * warranty upsell / nested warranty line items (see lib/cart.js's
- * annotateWarrantyUpsell + addWarrantyItem in the backend repo).
+ * annotateWarrantyUpsell + addWarrantyItem in the backend repo). Extended
+ * again to cover cart.offers — see lib/cart.js's offer-attachment logic in
+ * the backend repo, which only populates offers for carts containing an
+ * actual laptop (empty for empty carts or accessory-only carts).
  */
 
 export const SAMPLE_PRODUCTS = [
@@ -144,9 +147,10 @@ export const SAMPLE_PRODUCTS = [
  * Sample cart payload for the cart widget's preview mode. Mirrors
  * view-cart's real shape: a `warranty_upsell: true` hint on the
  * unprotected TUF laptop line, a real `item_type: 'warranty'` sub-line
- * already attached to the Zenbook DUO (for_product_id), and the
- * Zenbook DUO's own product line carrying `warranty_upsell: false`
- * since it's already protected.
+ * already attached to the Zenbook DUO (for_product_id), the Zenbook DUO's
+ * own product line carrying `warranty_upsell: false` since it's already
+ * protected, and an `offers` array (populated because the cart has actual
+ * laptops in it — empty for empty carts or accessory-only carts).
  */
 export const SAMPLE_CART = {
   session_id: 'sess_preview-demo',
@@ -166,6 +170,30 @@ export const SAMPLE_CART = {
   free_shipping_threshold_usd: 1500,
   free_shipping_remaining_usd: 0,
   qualifies_free_shipping: true,
+  offers: [
+    {
+      id: 'asus-member-adp',
+      title: 'Free 1-Year Accidental Damage Protection',
+      description: 'Join ASUS Member for free and get 1 year of ADP on this laptop.',
+      type: 'membership',
+      evergreen: true,
+    },
+    {
+      id: 'asus-student-discount',
+      title: 'Student Discount — 10% Off',
+      description: 'Verify your student status with SheerID to save 10% on this order.',
+      type: 'discount',
+      evergreen: true,
+    },
+    {
+      id: 'asus-back-to-school-bundle',
+      title: 'Back to School Bundle — Save $150',
+      description: 'Add a qualifying backpack or mouse to save $150 instantly at checkout.',
+      type: 'bundle',
+      evergreen: false,
+      expires: '2026-09-01',
+    },
+  ],
 };
 
 /** Sample recommendations payload for the recommendations widget's preview mode. */
@@ -245,5 +273,5 @@ export const SAMPLE_WARRANTY_PLANS = [
     includes_adp: true,
     covers: ['Warranty extension', 'Accidental Damage Protection (ADP): drops, spills, electrical surges, cracked LCD'],
     description: 'Extends ASUS\'s standard warranty on this laptop by 3 years and adds Accidental Damage Protection (ADP) for drops, spills, electrical surges, and cracked LCD screens.',
-  },
+  }
 ];
